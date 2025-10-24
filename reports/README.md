@@ -1,6 +1,6 @@
 # Reports Directory
 
-This directory contains generated test reports from the NASH automation framework.
+This directory contains generated test reports from the automation framework.
 
 ## Structure
 
