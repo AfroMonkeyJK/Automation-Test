@@ -1,0 +1,26 @@
+# Playwright
+node_modules/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+playwright.log
+.env
+
+# Reports - Keep folder structure but ignore generated files
+/reports/json/*.json
+/reports/html/*/
+!reports/json/.gitkeep
+
+# Test Results - Track structure but ignore content
+test-results/*
+!test-results/.gitkeep
+!test-results/videos/
+!test-results/screenshots/
+test-results/videos/*
+!test-results/videos/.gitkeep
+test-results/screenshots/*
+!test-results/screenshots/.gitkeep
+
+# Playwright
+/test-results/
+/playwright/.auth/
