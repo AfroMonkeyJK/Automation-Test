@@ -1,0 +1,134 @@
+[2025-10-16 16:25:43] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-16 16:25:43] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:25:43] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Wind Offshore Project for single Bidding Zone[39m
+[2025-10-16 16:26:19] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-16 16:26:19] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:26:19] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-16 16:26:37] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:26:37] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for PV Project for single Bidding Zone[39m
+[2025-10-16 16:26:59] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-16 16:26:59] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:26:59] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Hybrid Project for single Bidding Zone[39m
+[2025-10-16 16:40:44] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-16 16:40:44] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:40:44] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Wind Offshore Project for single Bidding Zone[39m
+[2025-10-16 16:41:11] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-16 16:41:11] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:41:11] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-16 16:41:28] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:41:28] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for PV Project for single Bidding Zone[39m
+[2025-10-16 16:41:53] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-16 16:41:53] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-16 16:41:53] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Hybrid Project for single Bidding Zone[39m
+[2025-10-20 09:58:37] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-20 09:58:37] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-20 09:58:37] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-20 09:58:37] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-20 09:58:37] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-20 09:59:45] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-20 09:59:45] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-20 09:59:45] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-20 09:59:45] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-20 09:59:45] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-20 10:02:31] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-20 10:02:31] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-20 10:02:31] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-20 10:02:31] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-20 10:02:31] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-20 10:27:08] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-20 10:27:08] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-20 10:27:08] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-20 10:27:08] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-20 10:27:08] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-20 10:28:08] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-20 10:28:08] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-20 10:28:08] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-20 10:28:08] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-20 10:28:08] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-20 14:55:24] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-20 14:55:24] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for PV Project for single Bidding Zone[39m
+[2025-10-20 14:55:51] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-20 14:55:51] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Hybrid Project for single Bidding Zone[39m
+[2025-10-21 09:36:23] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-21 09:36:23] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-21 09:36:23] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-21 09:36:23] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 09:36:23] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-21 09:39:09] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-21 09:39:09] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-21 09:39:09] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-21 09:39:09] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 09:39:09] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid Wind Project for single Bidding Zone[39m
+[2025-10-21 09:39:37] [31MERROR[39M: [31mError in configureGridbyCosts:[39m
+[2025-10-21 09:39:37] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid PV Project for single Bidding Zone[39m
+[2025-10-21 10:05:26] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-21 10:05:26] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-21 10:05:26] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-21 10:05:26] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 10:05:26] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-21 10:10:20] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-21 10:10:20] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-21 10:10:20] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-21 10:10:20] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 10:10:20] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid Wind Project for single Bidding Zone[39m
+[2025-10-21 11:39:28] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-21 11:39:28] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-21 11:39:28] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-21 11:39:28] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 11:39:28] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-21 11:42:47] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-21 11:42:47] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-21 11:42:47] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-21 11:42:47] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 11:42:47] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid Wind Project for single Bidding Zone[39m
+[2025-10-21 17:25:18] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 17:25:18] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for PV Project for single Bidding Zone[39m
+[2025-10-21 17:25:48] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 17:25:48] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Hybrid Project for single Bidding Zone[39m
+[2025-10-21 17:27:57] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 17:27:57] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for PV Project for multiple Bidding Zones[39m
+[2025-10-21 17:28:32] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 17:28:32] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Hybrid Project for multiple Bidding Zones[39m
+[2025-10-21 17:30:59] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 17:30:59] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for PV Project for No Bidding Zone[39m
+[2025-10-21 17:31:33] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-21 17:31:33] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Hybrid Project for No Bidding Zone[39m
+[2025-10-22 09:23:21] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-22 09:23:21] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for PV Project for single Bidding Zone[39m
+[2025-10-22 09:23:49] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-22 09:23:49] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Hybrid Project for single Bidding Zone[39m
+[2025-10-22 09:57:02] [31MERROR[39M: [31mError in configureGridbyCosts:[39m
+[2025-10-22 09:57:02] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for PV Project for single Bidding Zone[39m
+[2025-10-22 10:09:31] [31MERROR[39M: [31mError in configureGridbyCosts:[39m
+[2025-10-22 10:09:31] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid PV Project for single Bidding Zone[39m
+[2025-10-22 10:20:38] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-22 10:20:38] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-22 10:20:38] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-22 10:20:38] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-22 10:20:38] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-22 10:23:28] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-22 10:23:28] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-22 10:23:28] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-22 10:23:28] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-22 10:23:28] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid Wind Project for single Bidding Zone[39m
+[2025-10-22 12:41:56] [31MERROR[39M: [31mError in configureGridbyCosts:[39m
+[2025-10-22 12:41:56] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid PV Project for single Bidding Zone[39m
+[2025-10-22 14:06:47] [31MERROR[39M: [31mError Creating configuration and adding name for Wind Onshore:[39m
+[2025-10-22 14:06:47] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Configurations for Wind Onshore Project for multiple Bidding Zones[39m
+[2025-10-22 14:15:58] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-22 14:15:58] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-22 14:15:58] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-22 14:15:58] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-22 14:15:58] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m
+[2025-10-22 14:17:52] [31MERROR[39M: [31mError waiting for element to be clickable: Element is not clickable within 5000ms. Visible: true, Enabled: false. Locator: getByRole('button', { name: 'Save' }).filter({ hasText: 'Save' })[39m
+[2025-10-22 14:17:52] [31MERROR[39M: [31mError in adding wind layout:[39m
+[2025-10-22 14:17:52] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-22 14:17:52] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-22 14:17:52] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid Wind Project for single Bidding Zone[39m
+[2025-10-22 14:18:22] [31MERROR[39M: [31mError in configureGridbyCosts:[39m
+[2025-10-22 14:18:22] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Hybrid PV Project for single Bidding Zone[39m
+[2025-10-22 14:35:33] [31MERROR[39M: [31mError in configureGridbyCosts:[39m
+[2025-10-22 14:35:33] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for PV Project for single Bidding Zone[39m
+[2025-10-22 15:04:49] [31MERROR[39M: [31mError in configuring wind section:[39m
+[2025-10-22 15:04:49] [31MERROR[39M: [31mError configuring technology settings:[39m
+[2025-10-22 15:04:49] [31MERROR[39M: [31m❌ TEST FAILED: Create a new Parameter Study for Wind Onshore Project for single Bidding Zone[39m

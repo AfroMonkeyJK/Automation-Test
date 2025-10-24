@@ -1,0 +1,356 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to test"
+        required: false
+        default: "preprod"
+        type: choice
+        options:
+          - dev
+          - qa
+          - preprod
+          - prod
+      browser:
+        description: "Browser to test"
+        required: false
+        default: "chromium"
+        type: choice
+        options:
+          - chromium
+          - webkit
+          - all
+      tags:
+        description: "Test tags to run"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - "all"
+          - "@smoke"
+          - "@critical"
+          - "@regression"
+
+env:
+  NODE_VERSION: "lts/*"
+  ARTIFACT_RETENTION_DAYS: 7
+  MAX_JSON_REPORTS: 5
+
+jobs:
+  e2e-tests:
+    timeout-minutes: 90
+    runs-on: ubuntu-latest
+
+    # Don't run on draft PRs
+    if: github.event.pull_request.draft == false || github.event_name != 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: |
+          BROWSER="${{ github.event.inputs.browser || 'chromium' }}"
+
+          if [ "$BROWSER" = "all" ]; then
+            echo "📦 Installing all browsers..."
+            npx playwright install chromium webkit --with-deps
+          elif [ "$BROWSER" = "webkit" ]; then
+            echo "📦 Installing webkit..."
+            npx playwright install webkit --with-deps
+          else
+            echo "📦 Installing chromium..."
+            npx playwright install chromium --with-deps
+          fi
+
+      - name: Clean old artifacts
+        run: |
+          echo "🧹 Cleaning previous artifacts..."
+
+          clean_dir() {
+            local dir=$1
+            if [ -d "$dir" ]; then
+              find "$dir" -type f ! -name '.gitkeep' ! -name '.gitignore' -delete 2>/dev/null || true
+              echo "  ✅ Cleaned $dir"
+            else
+              mkdir -p "$dir"
+              echo "  📁 Created $dir"
+            fi
+          }
+
+          clean_dir "test-results/videos"
+          clean_dir "test-results/screenshots"
+          clean_dir "reports/json"
+          clean_dir "reports/html"
+
+          # Keep last N JSON reports
+          if [ -d "reports/json" ]; then
+            cd reports/json
+            ls -t *.json 2>/dev/null | tail -n +$((${{ env.MAX_JSON_REPORTS }} + 1)) | xargs -r rm -- 2>/dev/null || true
+            cd ../..
+            echo "  ✅ Kept last ${{ env.MAX_JSON_REPORTS }} JSON reports"
+          fi
+
+          find test-results -maxdepth 1 -type f -name "*.log" -delete 2>/dev/null || true
+          echo "✅ Cleanup complete!"
+
+      - name: Configure test execution
+        id: config
+        run: |
+          # Determine configuration based on trigger
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ENVIRONMENT="${{ github.event.inputs.environment }}"
+            TAGS="${{ github.event.inputs.tags }}"
+            BROWSER="${{ github.event.inputs.browser }}"
+            TRIGGER="manual"
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            ENVIRONMENT="preprod"
+            TAGS="@smoke"
+            BROWSER="chromium"
+            TRIGGER="pr"
+          else
+            # Push to main/master: run ALL tests
+            ENVIRONMENT="preprod"
+            TAGS="all"
+            BROWSER="chromium"
+            TRIGGER="push"
+          fi
+
+          # Determine npm script and tag parameter
+          if [ "$TAGS" = "all" ]; then
+            TAG_PARAM=""
+            TAG_DISPLAY="all"
+            NPM_SCRIPT="${ENVIRONMENT}-report"
+          elif [ "$TAGS" = "@smoke" ]; then
+            TAG_PARAM=""
+            TAG_DISPLAY="smoke"
+            NPM_SCRIPT="smoke-${ENVIRONMENT}-report"
+          elif [ "$TAGS" = "@critical" ]; then
+            TAG_PARAM=""
+            TAG_DISPLAY="critical"
+            NPM_SCRIPT="critical-${ENVIRONMENT}-report"
+          elif [ "$TAGS" = "@regression" ]; then
+            TAG_PARAM=""
+            TAG_DISPLAY="regression"
+            NPM_SCRIPT="regression-${ENVIRONMENT}-report"
+          elif [ "$TAGS" = "@wip" ]; then
+            TAG_PARAM=""
+            TAG_DISPLAY="wip"
+            NPM_SCRIPT="wip-${ENVIRONMENT}-report"
+          else
+            # Custom tag, use wip script with parameter
+            TAG_PARAM="--tags \"$TAGS\""
+            TAG_DISPLAY="${TAGS#@}"
+            NPM_SCRIPT="wip-${ENVIRONMENT}-report"
+          fi
+
+          # Save outputs
+          echo "environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
+          echo "tags=$TAGS" >> $GITHUB_OUTPUT
+          echo "tag_param=$TAG_PARAM" >> $GITHUB_OUTPUT
+          echo "tag_display=$TAG_DISPLAY" >> $GITHUB_OUTPUT
+          echo "trigger=$TRIGGER" >> $GITHUB_OUTPUT
+          echo "browser=$BROWSER" >> $GITHUB_OUTPUT
+          echo "npm_script=$NPM_SCRIPT" >> $GITHUB_OUTPUT
+
+          # Log config
+          echo "🎯 Test Configuration:"
+          echo "  Environment: $ENVIRONMENT"
+          echo "  Tags: $TAG_DISPLAY"
+          echo "  Browser: $BROWSER"
+          echo "  Trigger: $TRIGGER"
+          echo "  NPM Script: $NPM_SCRIPT"
+
+      - name: Run E2E Tests
+        id: tests
+        env:
+          TESTUSER_EMAIL: ${{ vars.TESTUSER_EMAIL }}
+          TESTUSER_PASSWORD: ${{ secrets.TESTUSER_PASSWORD }}
+          CI: true
+          ENV_VARS: ${{ steps.config.outputs.environment }}
+        run: |
+          NPM_SCRIPT="${{ steps.config.outputs.npm_script }}"
+          TAG_PARAM="${{ steps.config.outputs.tag_param }}"
+
+          echo "🚀 Running tests..."
+
+          if [ -n "$TAG_PARAM" ]; then
+            echo "  Command: npm run $NPM_SCRIPT -- $TAG_PARAM"
+            npm run "$NPM_SCRIPT" -- $TAG_PARAM || EXIT_CODE=$?
+          else
+            echo "  Command: npm run $NPM_SCRIPT"
+            npm run "$NPM_SCRIPT" || EXIT_CODE=$?
+          fi
+
+          echo "exit_code=${EXIT_CODE:-0}" >> $GITHUB_OUTPUT
+          exit ${EXIT_CODE:-0}
+        continue-on-error: true
+
+      - name: Check test artifacts
+        id: artifacts
+        if: always()
+        run: |
+          VIDEO_COUNT=$(find test-results/videos -type f -name "*.webm" 2>/dev/null | wc -l || echo "0")
+          SCREENSHOT_COUNT=$(find test-results/screenshots -type f -name "*.png" 2>/dev/null | wc -l || echo "0")
+
+          HAS_HTML_REPORT="false"
+          HAS_JSON_REPORT="false"
+          HAS_LOGS="false"
+
+          [ -d "reports/html" ] && [ "$(ls -A reports/html 2>/dev/null)" ] && HAS_HTML_REPORT="true"
+          [ -d "reports/json" ] && [ "$(ls -A reports/json/*.json 2>/dev/null)" ] && HAS_JSON_REPORT="true"
+          [ "$(find . -maxdepth 2 -name "*.log" 2>/dev/null | wc -l)" -gt 0 ] && HAS_LOGS="true"
+
+          echo "video_count=$VIDEO_COUNT" >> $GITHUB_OUTPUT
+          echo "screenshot_count=$SCREENSHOT_COUNT" >> $GITHUB_OUTPUT
+          echo "has_videos=$( [ $VIDEO_COUNT -gt 0 ] && echo 'true' || echo 'false' )" >> $GITHUB_OUTPUT
+          echo "has_screenshots=$( [ $SCREENSHOT_COUNT -gt 0 ] && echo 'true' || echo 'false' )" >> $GITHUB_OUTPUT
+          echo "has_html_report=$HAS_HTML_REPORT" >> $GITHUB_OUTPUT
+          echo "has_json_report=$HAS_JSON_REPORT" >> $GITHUB_OUTPUT
+          echo "has_logs=$HAS_LOGS" >> $GITHUB_OUTPUT
+
+          echo "📊 Artifacts:"
+          echo "  Videos: $VIDEO_COUNT"
+          echo "  Screenshots: $SCREENSHOT_COUNT"
+
+      - name: Upload Cucumber Report
+        uses: actions/upload-artifact@v4
+        if: always() && steps.artifacts.outputs.has_html_report == 'true'
+        with:
+          name: cucumber-report-${{ steps.config.outputs.trigger }}-${{ steps.config.outputs.environment }}-${{ steps.config.outputs.tag_display }}-${{ github.run_number }}
+          path: reports/html/
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+          compression-level: 6
+
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        if: always() && steps.artifacts.outputs.has_screenshots == 'true'
+        with:
+          name: screenshots-${{ steps.config.outputs.trigger }}-${{ steps.config.outputs.environment }}-${{ steps.config.outputs.tag_display }}-${{ github.run_number }}
+          path: test-results/screenshots/
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+          compression-level: 9
+
+      - name: Upload Videos
+        uses: actions/upload-artifact@v4
+        if: always() && steps.artifacts.outputs.has_videos == 'true'
+        with:
+          name: videos-${{ steps.config.outputs.trigger }}-${{ steps.config.outputs.environment }}-${{ steps.config.outputs.tag_display }}-${{ github.run_number }}
+          path: test-results/videos/
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+          compression-level: 6
+
+      - name: Upload Logs
+        uses: actions/upload-artifact@v4
+        if: always() && steps.artifacts.outputs.has_logs == 'true'
+        with:
+          name: logs-${{ steps.config.outputs.trigger }}-${{ steps.config.outputs.environment }}-${{ steps.config.outputs.tag_display }}-${{ github.run_number }}
+          path: |
+            *.log
+            logs/
+            test-results/*.log
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+          compression-level: 9
+
+      - name: Upload JSON Report
+        uses: actions/upload-artifact@v4
+        if: always() && steps.artifacts.outputs.has_json_report == 'true'
+        with:
+          name: json-report-${{ steps.config.outputs.trigger }}-${{ steps.config.outputs.environment }}-${{ steps.config.outputs.tag_display }}-${{ github.run_number }}
+          path: reports/json/
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+          compression-level: 9
+
+      - name: Generate Test Summary
+        if: always()
+        run: |
+          EXIT_CODE="${{ steps.tests.outputs.exit_code }}"
+          VIDEO_COUNT="${{ steps.artifacts.outputs.video_count }}"
+          SCREENSHOT_COUNT="${{ steps.artifacts.outputs.screenshot_count }}"
+
+          if [ "$EXIT_CODE" = "0" ]; then
+            STATUS_EMOJI="✅"
+            STATUS_TEXT="Success"
+          else
+            STATUS_EMOJI="❌"
+            STATUS_TEXT="Failed"
+          fi
+
+          echo "## 🧪 Test Results $STATUS_EMOJI" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Status** | $STATUS_TEXT |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Environment** | \`${{ steps.config.outputs.environment }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Tags** | \`${{ steps.config.outputs.tag_display }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Trigger** | ${{ steps.config.outputs.trigger }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Run** | #${{ github.run_number }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$VIDEO_COUNT" -eq 0 ] && [ "$SCREENSHOT_COUNT" -eq 0 ]; then
+            echo "✅ **All tests passed!**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ⚠️ Test Failures" >> $GITHUB_STEP_SUMMARY
+            echo "- 🎥 Videos: $VIDEO_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "- 📸 Screenshots: $SCREENSHOT_COUNT" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Comment on PR
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const exitCode = '${{ steps.tests.outputs.exit_code }}';
+            const videoCount = '${{ steps.artifacts.outputs.video_count }}';
+            const screenshotCount = '${{ steps.artifacts.outputs.screenshot_count }}';
+            const runUrl = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+
+            const status = exitCode === '0' ? '✅ Passed' : '❌ Failed';
+
+            let body = `## 🧪 E2E Tests ${status}\n\n`;
+            body += `**Environment:** preprod\n`;
+            body += `**Tags:** @smoke\n`;
+            body += `**Run:** [#${{ github.run_number }}](${runUrl})\n\n`;
+
+            if (exitCode !== '0') {
+              body += `### ⚠️ Failures Detected\n`;
+              body += `- 🎥 Videos: ${videoCount}\n`;
+              body += `- 📸 Screenshots: ${screenshotCount}\n\n`;
+              body += `💡 **Tip:** Click "View details" → "Re-run failed jobs" to retry.`;
+            } else {
+              body += `✅ All smoke tests passed!`;
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+      - name: Fail if tests failed
+        if: always()
+        run: |
+          EXIT_CODE="${{ steps.tests.outputs.exit_code }}"
+          if [ "$EXIT_CODE" != "0" ]; then
+            echo "❌ Tests failed"
+            exit 1
+          fi
+          echo "✅ Tests passed!"
